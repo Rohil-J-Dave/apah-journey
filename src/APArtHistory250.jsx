@@ -645,24 +645,20 @@ export default function APArtHistory250() {
             marginBottom: 8,
           }}
         >
-          College Board · 2019–2020 Curriculum
+          Rohil J Dave · AP Art History · Class of 2020
         </div>
         <h1
           style={{
-            fontSize: 36,
-            fontWeight: 300,
+            fontSize: 42,
+            fontWeight: 700,
             color: "#1a1a1a",
             margin: 0,
             letterSpacing: "-0.02em",
             lineHeight: 1.2,
+            textAlign: "center",
           }}
         >
-          AP Art History
-          <span
-            style={{ fontWeight: 700, display: "block", fontSize: 42 }}
-          >
-            250 Required Works
-          </span>
+          Rohil's 250 Quest
         </h1>
         <p
           style={{
