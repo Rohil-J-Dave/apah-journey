@@ -631,7 +631,7 @@ export default function APArtHistory250() {
       <header
         style={{
           padding: "48px 40px 32px",
-          maxWidth: 1100,
+          maxWidth: 1400,
           margin: "0 auto",
         }}
       >
@@ -658,16 +658,17 @@ export default function APArtHistory250() {
             textAlign: "center",
           }}
         >
-          Rohil's 250 Quest
+          250 works. One quest.
         </h1>
         <p
           style={{
             fontSize: 15,
             color: "#888",
             marginTop: 12,
-            maxWidth: 600,
+            maxWidth: 1400,
             lineHeight: 1.6,
             fontWeight: 400,
+            textAlign: "center"
           }}
         >
           A comprehensive log of every required work across all 10 content areas,
@@ -677,7 +678,7 @@ export default function APArtHistory250() {
 
       <div
         style={{
-          maxWidth: 1100,
+          maxWidth: 1400,
           margin: "0 auto",
           padding: "0 40px 20px",
           display: "flex",
@@ -694,7 +695,7 @@ export default function APArtHistory250() {
               top: "50%",
               transform: "translateY(-50%)",
               color: "#bbb",
-              fontSize: 15,
+              fontSize: 23,
               pointerEvents: "none",
             }}
           >
@@ -757,7 +758,7 @@ export default function APArtHistory250() {
 
       <main
         style={{
-          maxWidth: 1100,
+          maxWidth: 1400,
           margin: "0 auto",
           padding: "0 40px 60px",
         }}
@@ -796,7 +797,7 @@ export default function APArtHistory250() {
 
       <footer
         style={{
-          maxWidth: 1100,
+          maxWidth: 1400,
           margin: "0 auto",
           padding: "0 40px 40px",
           textAlign: "center",
@@ -809,7 +810,9 @@ export default function APArtHistory250() {
             fontFamily: "'DM Mono', monospace",
           }}
         >
-          Source: College Board AP Art History Course and Exam Description, Appendix A
+          Source: College Board AP Art History Course and Exam Description, Appendix A.
+          Based on the 2019-2020 curriculum, the year I took the course and exam.
+          Enjoy the journey.
         </p>
       </footer>
     </div>
