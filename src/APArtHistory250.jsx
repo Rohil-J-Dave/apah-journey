@@ -333,6 +333,94 @@ const CONTENT_AREAS = [
   }
 ];
 
+/* ─── Toggle Switch Component ─── */
+function ViewToggle({ activeView, onToggle }) {
+  return (
+    <div
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        background: "#e8e5dd",
+        borderRadius: 8,
+        padding: 3,
+        gap: 2,
+      }}
+    >
+      {["list", "globe"].map((view) => (
+        <button
+          key={view}
+          onClick={() => onToggle(view)}
+          style={{
+            padding: "8px 20px",
+            border: "none",
+            borderRadius: 6,
+            fontSize: 12,
+            fontFamily: "'DM Mono', monospace",
+            fontWeight: 600,
+            cursor: "pointer",
+            transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
+            background: activeView === view ? "#fff" : "transparent",
+            color: activeView === view ? "#1a1a1a" : "#999",
+            boxShadow: activeView === view ? "0 1px 3px rgba(0,0,0,0.1)" : "none",
+            textTransform: "capitalize",
+            letterSpacing: "0.04em",
+          }}
+        >
+          {view === "list" ? "☰ List" : "◉ Globe"}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+/* ─── Globe View (placeholder) ─── */
+function GlobeView() {
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "60vh",
+        gap: 16,
+        animation: "fadeSlideIn 0.4s ease forwards",
+      }}
+    >
+      <div
+        style={{
+          width: 160,
+          height: 160,
+          borderRadius: "50%",
+          border: "2px dashed #ccc",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: 48,
+          color: "#ddd",
+        }}
+      >
+        ◉
+      </div>
+      <p
+        style={{
+          fontSize: 15,
+          color: "#aaa",
+          fontFamily: "'DM Mono', monospace",
+          textAlign: "center",
+          maxWidth: 400,
+          lineHeight: 1.6,
+        }}
+      >
+        Globe view coming soon.
+        <br />
+        An orthographic view of Earth with all 250 works plotted.
+      </p>
+    </div>
+  );
+}
+
+/* ─── Collapsible Section ─── */
 function CollapsibleSection({ area, isOpen, onToggle, index }) {
   const contentRef = useRef(null);
   const [height, setHeight] = useState(0);
@@ -559,27 +647,8 @@ const tdStyle = {
   lineHeight: 1.45,
 };
 
-export default function APArtHistory250() {
-  const [openSections, setOpenSections] = useState(new Set([1]));
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const toggleSection = (id) => {
-    setOpenSections((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  };
-
-  const expandAll = () => {
-    setOpenSections(new Set(CONTENT_AREAS.map((a) => a.id)));
-  };
-
-  const collapseAll = () => {
-    setOpenSections(new Set());
-  };
-
+/* ─── List View ─── */
+function ListView({ searchTerm, setSearchTerm, openSections, setOpenSections, expandAll, collapseAll }) {
   const filteredAreas = searchTerm.trim()
     ? CONTENT_AREAS.map((area) => ({
         ...area,
@@ -595,87 +664,17 @@ export default function APArtHistory250() {
 
   const totalShown = filteredAreas.reduce((s, a) => s + a.works.length, 0);
 
+  const toggleSection = (id) => {
+    setOpenSections((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "#f5f3ee",
-        fontFamily: "'Source Serif 4', Georgia, serif",
-      }}
-    >
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,500;8..60,600;8..60,700&family=DM+Mono:wght@300;400;500&display=swap');
-
-        @keyframes fadeSlideIn {
-          from { opacity: 0; transform: translateY(8px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes rowFadeIn {
-          from { opacity: 0; transform: translateX(-6px); }
-          to { opacity: 1; transform: translateX(0); }
-        }
-
-        * { box-sizing: border-box; }
-
-        input::placeholder {
-          color: #bbb;
-          font-style: italic;
-        }
-
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
-      `}</style>
-
-      <header
-        style={{
-          padding: "48px 40px 32px",
-          maxWidth: 1400,
-          margin: "0 auto",
-        }}
-      >
-        <div
-          style={{
-            fontSize: 11,
-            fontFamily: "'DM Mono', monospace",
-            textTransform: "uppercase",
-            letterSpacing: "0.15em",
-            color: "#999",
-            marginBottom: 8,
-          }}
-        >
-          Rohil J Dave · AP Art History · Class of 2020
-        </div>
-        <h1
-          style={{
-            fontSize: 42,
-            fontWeight: 700,
-            color: "#1a1a1a",
-            margin: 0,
-            letterSpacing: "-0.02em",
-            lineHeight: 1.2,
-            textAlign: "center",
-          }}
-        >
-          250 works. One quest.
-        </h1>
-        <p
-          style={{
-            fontSize: 15,
-            color: "#888",
-            marginTop: 12,
-            maxWidth: 1400,
-            lineHeight: 1.6,
-            fontWeight: 400,
-            textAlign: "center"
-          }}
-        >
-          A comprehensive log of every required work across all 10 content areas,
-          from Global Prehistory through Global Contemporary.
-        </p>
-      </header>
-
+    <div style={{ animation: "fadeSlideIn 0.4s ease forwards" }}>
       <div
         style={{
           maxWidth: 1400,
@@ -794,6 +793,128 @@ export default function APArtHistory250() {
           )}
         </div>
       </main>
+    </div>
+  );
+}
+
+/* ─── Main App ─── */
+export default function APArtHistory250() {
+  const [activeView, setActiveView] = useState("list");
+  const [openSections, setOpenSections] = useState(new Set([1]));
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const expandAll = () => {
+    setOpenSections(new Set(CONTENT_AREAS.map((a) => a.id)));
+  };
+
+  const collapseAll = () => {
+    setOpenSections(new Set());
+  };
+
+  return (
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "#f5f3ee",
+        fontFamily: "'Source Serif 4', Georgia, serif",
+      }}
+    >
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,500;8..60,600;8..60,700&family=DM+Mono:wght@300;400;500&display=swap');
+
+        @keyframes fadeSlideIn {
+          from { opacity: 0; transform: translateY(8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes rowFadeIn {
+          from { opacity: 0; transform: translateX(-6px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+
+        * { box-sizing: border-box; }
+
+        input::placeholder {
+          color: #bbb;
+          font-style: italic;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+      `}</style>
+
+      <header
+        style={{
+          padding: "48px 40px 24px",
+          maxWidth: 1400,
+          margin: "0 auto",
+        }}
+      >
+        <div
+          style={{
+            fontSize: 11,
+            fontFamily: "'DM Mono', monospace",
+            textTransform: "uppercase",
+            letterSpacing: "0.15em",
+            color: "#999",
+            marginBottom: 8,
+          }}
+        >
+          Rohil J Dave · AP Art History · Class of 2020
+        </div>
+        <h1
+          style={{
+            fontSize: 42,
+            fontWeight: 700,
+            color: "#1a1a1a",
+            margin: 0,
+            letterSpacing: "-0.02em",
+            lineHeight: 1.2,
+            textAlign: "center",
+          }}
+        >
+          Two hundred and fifty works. One quest.
+        </h1>
+        <p
+          style={{
+            fontSize: 15,
+            color: "#888",
+            marginTop: 12,
+            maxWidth: 1400,
+            lineHeight: 1.6,
+            fontWeight: 400,
+            textAlign: "center"
+          }}
+        >
+          A comprehensive log of every required work across all 10 content areas,
+          from Global Prehistory through Global Contemporary.
+        </p>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: 20,
+            marginBottom: 8,
+          }}
+        >
+          <ViewToggle activeView={activeView} onToggle={setActiveView} />
+        </div>
+      </header>
+
+      {activeView === "list" ? (
+        <ListView
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          openSections={openSections}
+          setOpenSections={setOpenSections}
+          expandAll={expandAll}
+          collapseAll={collapseAll}
+        />
+      ) : (
+        <GlobeView />
+      )}
 
       <footer
         style={{
