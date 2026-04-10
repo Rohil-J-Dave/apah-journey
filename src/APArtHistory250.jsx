@@ -366,8 +366,8 @@ function IntroSequence({ onComplete }) {
   const titlePauseMap = { 28: 2400 };
   const subtitle = "A comprehensive log of every required work across all 10 content areas, from Global Prehistory through Global Contemporary.";
 
-  const { displayed: titleText, done: titleDone } = useTypewriterWithPauses(title, 45, 1000, true, titlePauseMap);
-  const { displayed: subText, done: subDone } = useTypewriterWithPauses(subtitle, 45, 3000, titleDone, {});
+  const { displayed: titleText, done: titleDone } = useTypewriterWithPauses(title, 70, 1000, true, titlePauseMap);
+  const { displayed: subText, done: subDone } = useTypewriterWithPauses(subtitle, 45, 2200, titleDone, {});
   const [fading, setFading] = useState(false);
 
   useEffect(() => { if (subDone) { const t = setTimeout(() => setFading(true), 3000); return () => clearTimeout(t); } }, [subDone]);
@@ -393,13 +393,13 @@ function IntroSequence({ onComplete }) {
 function ViewToggle({ activeView, onToggle }) {
   return (
     <div style={{ display: "inline-flex", alignItems: "center", background: "#e8e5dd", borderRadius: 8, padding: 3, gap: 2 }}>
-      {["globe", "list"].map((view) => (
+      {["globe", "map", "list"].map((view) => (
         <button key={view} onClick={() => onToggle(view)} style={{
           padding: "7px 18px", border: "none", borderRadius: 6, fontSize: 11, fontFamily: "'DM Mono', monospace", fontWeight: 600,
           cursor: "pointer", transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
           background: activeView === view ? "#fff" : "transparent", color: activeView === view ? "#1a1a1a" : "#999",
           boxShadow: activeView === view ? "0 1px 3px rgba(0,0,0,0.1)" : "none", textTransform: "capitalize", letterSpacing: "0.04em",
-        }}>{view === "list" ? "☰ List" : "◉ Globe"}</button>
+        }}>{view === "list" ? "☰ List" : view === "globe" ? "◉ Globe" : "⊞ Map"}</button>
       ))}
     </div>
   );
@@ -410,6 +410,15 @@ function GlobeView() {
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "60vh", gap: 16, animation: "contentFadeIn 0.5s ease forwards" }}>
       <div style={{ width: 160, height: 160, borderRadius: "50%", border: "2px dashed #ccc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 48, color: "#ddd" }}>◉</div>
       <p style={{ fontSize: 15, color: "#aaa", fontFamily: "'DM Mono', monospace", textAlign: "center", maxWidth: 400, lineHeight: 1.6 }}>Globe view coming soon.<br />An orthographic view of Earth with all visited works plotted.</p>
+    </div>
+  );
+}
+
+function MapView() {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "60vh", gap: 16, animation: "contentFadeIn 0.5s ease forwards" }}>
+      <div style={{ width: 200, height: 120, borderRadius: 8, border: "2px dashed #ccc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 36, color: "#ddd" }}>⊞</div>
+      <p style={{ fontSize: 15, color: "#aaa", fontFamily: "'DM Mono', monospace", textAlign: "center", maxWidth: 400, lineHeight: 1.6 }}>Map view coming soon.<br />A flat map with all 250 works plotted.</p>
     </div>
   );
 }
@@ -522,6 +531,8 @@ export default function APArtHistory250() {
           </header>
           {activeView === "list" ? (
             <ListView searchTerm={searchTerm} setSearchTerm={setSearchTerm} openSections={openSections} setOpenSections={setOpenSections} expandAll={expandAll} collapseAll={collapseAll} />
+          ) : activeView === "map" ? (
+            <MapView />
           ) : (
             <GlobeView />
           )}
