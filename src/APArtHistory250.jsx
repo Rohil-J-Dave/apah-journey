@@ -362,12 +362,12 @@ function useTypewriterWithPauses(text, speed = 35, startDelay = 0, enabled = tru
 /* ─── Intro Sequence ─── */
 function IntroSequence({ onComplete }) {
   const title = "Two hundred and fifty works. One quest.";
-  // "works." ends at index 35 — pause 2s after that character
-  const titlePauseMap = { 35: 2000 };
+  // "works." ends at index 28 — pause 2s after that character
+  const titlePauseMap = { 28: 2400 };
   const subtitle = "A comprehensive log of every required work across all 10 content areas, from Global Prehistory through Global Contemporary.";
 
-  const { displayed: titleText, done: titleDone } = useTypewriterWithPauses(title, 38, 400, true, titlePauseMap);
-  const { displayed: subText, done: subDone } = useTypewriterWithPauses(subtitle, 32, 1200, titleDone, {});
+  const { displayed: titleText, done: titleDone } = useTypewriterWithPauses(title, 45, 1000, true, titlePauseMap);
+  const { displayed: subText, done: subDone } = useTypewriterWithPauses(subtitle, 45, 3000, titleDone, {});
   const [fading, setFading] = useState(false);
 
   useEffect(() => { if (subDone) { const t = setTimeout(() => setFading(true), 3000); return () => clearTimeout(t); } }, [subDone]);
@@ -375,12 +375,12 @@ function IntroSequence({ onComplete }) {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "80vh", padding: 40, opacity: fading ? 0 : 1, transition: "opacity 1s ease" }}>
-      <h1 style={{ fontSize: 42, fontWeight: 700, color: "#1a1a1a", margin: 0, letterSpacing: "-0.02em", lineHeight: 1.3, textAlign: "center", maxWidth: 700, minHeight: 55, fontFamily: "'Source Serif 4', Georgia, serif" }}>
+      <h1 style={{ fontSize: 42, fontWeight: 700, color: "#1a1a1a", margin: 0, letterSpacing: "-0.02em", lineHeight: 1.3, textAlign: "center", maxWidth: 1000, minHeight: 55, fontFamily: "'Source Serif 4', Georgia, serif" }}>
         {titleText}
         {!titleDone && <span style={{ display: "inline-block", width: 3, height: "1em", background: "#1a1a1a", marginLeft: 2, verticalAlign: "text-bottom", animation: "cursorBlink 0.8s step-end infinite" }} />}
       </h1>
       {titleDone && (
-        <p style={{ fontSize: 15, color: "#888", marginTop: 20, maxWidth: 650, lineHeight: 1.7, fontWeight: 400, textAlign: "center", fontFamily: "'Source Serif 4', Georgia, serif", minHeight: 50 }}>
+        <p style={{ fontSize: 15, color: "#888", marginTop: 20, maxWidth: 2000, lineHeight: 1.7, fontWeight: 400, textAlign: "center", fontFamily: "'Source Serif 4', Georgia, serif", minHeight: 50 }}>
           {subText}
           {!subDone && <span style={{ display: "inline-block", width: 2, height: "0.9em", background: "#888", marginLeft: 1, verticalAlign: "text-bottom", animation: "cursorBlink 0.8s step-end infinite" }} />}
         </p>
@@ -409,7 +409,7 @@ function GlobeView() {
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "60vh", gap: 16, animation: "contentFadeIn 0.5s ease forwards" }}>
       <div style={{ width: 160, height: 160, borderRadius: "50%", border: "2px dashed #ccc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 48, color: "#ddd" }}>◉</div>
-      <p style={{ fontSize: 15, color: "#aaa", fontFamily: "'DM Mono', monospace", textAlign: "center", maxWidth: 400, lineHeight: 1.6 }}>Globe view coming soon.<br />An orthographic view of Earth with all 250 works plotted.</p>
+      <p style={{ fontSize: 15, color: "#aaa", fontFamily: "'DM Mono', monospace", textAlign: "center", maxWidth: 400, lineHeight: 1.6 }}>Globe view coming soon.<br />An orthographic view of Earth with all visited works plotted.</p>
     </div>
   );
 }
