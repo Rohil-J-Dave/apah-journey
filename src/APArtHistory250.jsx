@@ -361,9 +361,9 @@ function useTypewriterWithPauses(text, speed = 35, startDelay = 0, enabled = tru
 
 /* ─── Intro Sequence ─── */
 function IntroSequence({ onComplete }) {
-  const title = "Two hundred and fifty works. One quest.";
+  const title = "250 Works. Across Human History. All Over Our Planet";
   // "works." ends at index 28 — pause 2s after that character
-  const titlePauseMap = { 28: 2400 };
+  const titlePauseMap = { 10: 2400 };
   const subtitle = "A comprehensive log of every required work across all 10 content areas, from Global Prehistory through Global Contemporary.";
 
   const { displayed: titleText, done: titleDone } = useTypewriterWithPauses(title, 70, 1000, true, titlePauseMap);
